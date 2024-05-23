@@ -1,0 +1,113 @@
+# INPUT
+import math
+
+
+# an exmple of input 
+
+x = 3141592653589793238462643383279502884197169399375105820974944592
+y = 2718281828459045235360287471352662497757247093699959574966967627
+
+x = str(x)
+y = str(y)
+
+n = len(x) 
+k = int(math.log2(n))
+
+# DEFINITIONS
+
+def oper (z):     # z to lista dwóch strings (cyfrowych); dwie "liczby" do pomnozenia
+    i = int (len(z[0]) / 2)
+    a = z[0][:-i]
+    b = z[0][-i:]
+    c = z[1][:-i]
+    d = z[1][-i:]
+    l = [a, b, c, d]
+    return l
+
+def calc (l):
+    p = max (len(l[0]), len(l[1]), len(l[2]), len(l[3]))
+    
+    l[0] = l[0].zfill(p)
+    l[1] = l[1].zfill(p)
+    l[2] = l[2].zfill(p)
+    l[3] = l[3].zfill(p)
+    
+    element1 = [l[0], l[2]]
+    element2 = [l[1], l[3]]
+    a = int(l[0])
+    b = int(l[1])
+    c = int(l[2])
+    d = int(l[3])
+    element3 = [str(a + b), str(c + d)]
+    return [element1, element2, element3]
+
+def mul0 (p):  
+    
+    a = int(p[0][0])*int(p[0][1])
+    b = int(p[1][0])*int(p[1][1])
+    c = int(p[2][0])*int(p[2][1]) 
+    
+    AA = a
+    BB = b
+    CC = c - a - b 
+    w = AA * 100 + CC * 10 + BB
+    
+    return w
+
+#CALCULATIONS
+
+A = [None] * (k+1)   
+B = [None] * k       
+A[0] = [[x,y]]
+
+for i in range(k):   
+    for item in A[i]:
+        if B[i] == None:
+            B[i] = [oper(item)]
+        else:
+            B[i].extend([oper(item)])
+            
+        if A[i+1] == None:
+            A[i+1] = calc (oper (item)  )
+        else:
+            A[i+1].extend(calc (oper (item)))
+
+C = [None] * (k+1)
+
+for i in range(0, k+1):
+    C[i] = A[len(A)-i-1]
+
+D = [None] * (k)
+    
+for j in range (0, pow(3,k), 3):
+    a = [C[0][j], C[0][j+1], C[0][j+2]]
+    val = mul0(a)
+    
+    if D[0] == None:
+        D[0] = [val]
+    else:
+        D[0].extend([val])
+
+for i in range (1, k):
+    for j in range (0, pow(3,k-i), 3):
+        
+        a = [D[i-1][j], D[i-1][j+1], D[i-1][j+2]]
+                
+        AAA = a[0]
+        BBB = a[1]
+        CCC = a[2] - a[1] - a[0]
+    
+        val = AAA * pow(10, pow(2,i+1)) + CCC * pow(10, pow(2,i)) + BBB    
+            
+        if D[i] == None:
+            D[i] = [val]
+        else:
+            D[i].extend([val])
+            
+wynik = D[k-1][0]
+
+wynik
+
+
+
+
