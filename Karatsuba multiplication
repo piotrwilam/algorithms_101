@@ -15,7 +15,7 @@ k = int(math.log2(n))
 
 # DEFINITIONS
 
-def oper (z):     # z to lista dwóch strings (cyfrowych); dwie "liczby" do pomnozenia
+def oper (z):     
     i = int (len(z[0]) / 2)
     a = z[0][:-i]
     b = z[0][-i:]
