@@ -11,7 +11,7 @@ In case of numbers longer than 2 digits, Karatsuba multiplication is to be perfo
 """
 
 """PART 1
-the downstream part consists of three main functions:
+The downstream part consists of three main functions:
 1) downstream_simple - downstream stage for two numbers (i.e. 1234, 5678 -> 12, 34, 56, 78, 46, 134)
 2) downstream_list - downstream_simple applied to pairs of numbers on the list (i.e. [12, 34, 56, 78, 46, 134] -> [1,5,2,6,3,11,3,7,4,8,7,15,4,13,6,4,10,17]
 3) downstream_recursive - the recursive application of the above two
@@ -55,7 +55,7 @@ def downstream_recursive (list_in):
     return list_out
  
 """PART 2
-the first upstream step as prescribed by the algorithm performed on one digit numbers or one and two digit numbers
+The first upstream step as prescribed by the algorithm performed on one digit numbers or one and two digit numbers.
 """
 
 def upstream_base (list_in): 
@@ -65,28 +65,28 @@ def upstream_base (list_in):
     return list_out
 
 """PART 3
-the upstream part consists of three main functions:
+The upstream part consists of three main functions:
 1) upstream_simple - upstream stage for three numbers 
 2) upstream_list - upstream_simple applied to triples of numbers on the list 
 3) upstream_recursive - the recursive application of the above two
 """
 
-def upstream_case2_simple (level, triple):
+def upstream_simple (level, triple):
     product = pow(10,2*level)*triple[0] + pow(10,level)*(triple[2]-triple[0]-triple[1]) + triple[1]
     return product
 
-def upstream_case2_list (level, list_in):
+def upstream_list (level, list_in):
     product_list = []
     for k in range (0, len(list_in), 3):
         processed_items = list_in[k:k+3]
-        product_list.append (upstream_case2_simple (level, processed_items))
+        product_list.append (upstream_simple (level, processed_items))
     return product_list
  
 def upstream_recursive (list_in):
     level = 1
     list_processed = list_in
     while len(list_processed) != 1:
-        list_processed = upstream_case2_list (level, list_processed)
+        list_processed = upstream_list (level, list_processed)
         level = 2*level
     final_product = list_processed[0]
     return final_product
