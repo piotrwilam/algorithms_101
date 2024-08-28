@@ -1,31 +1,15 @@
-
-def int_to_digit_list(number):
-"""int_to_digit_list transforms an integer into a list of it digits"""
-    list_of_digits = []
-    while number > 0:
-        list_of_digits.insert(0, number % 10)
-        number = (int)(number/10)
-    return list_of_digits
-
-def digit_list_to_int(list_of_digits):
-"""digit_list_to_int transforms a list of it digits into a number"""
-    number = 0
-    mul = 1
-    for i in range (len(list_of_digits)):
-        number += list_of_digits[-1-i] * mul
-        mul *= 10
-    return number
+import list
 
 # PART 1
 
 def downstream_simple (number_1, number_2):
-    split_index = int(len(int_to_digit_list(number_1))/2)
-    list_1 = int_to_digit_list (number_1)
-    list_2 = int_to_digit_list (number_2)
+    split_index = int(len(list.int_to_digit_list(number_1))/2)
+    list_1 = list.int_to_digit_list (number_1)
+    list_2 = list.int_to_digit_list (number_2)
     list_1_front, list_1_back = list_1[:-split_index], list_1[-split_index:]
     list_2_front, list_2_back = list_2[:-split_index], list_2[-split_index:]
-    number_1_front, number_1_back = digit_list_to_int(list_1_front), digit_list_to_int(list_1_back)
-    number_2_front, number_2_back = digit_list_to_int(list_2_front), digit_list_to_int(list_2_back)
+    number_1_front, number_1_back = list.digit_list_to_int(list_1_front), list.digit_list_to_int(list_1_back)
+    number_2_front, number_2_back = list.digit_list_to_int(list_2_front), list.digit_list_to_int(list_2_back)
     return [number_1_front, number_2_front, number_1_back, number_2_back, number_1_front+number_1_back, number_2_front+number_2_back]
 
 def downstream_list (list_in):
@@ -78,7 +62,7 @@ def input_numbers(number1, number2):
     return input_list
 
 
-def karatsuba_algorithm (number1, number2):
+def karatsuba (number1, number2):
     """KARATSUBA Algorithm (KA)
     KA makes multiplication of integers. Numbers to be multiplied have equal number of digits and the number of digits is a power of 2
     KA is described in the book: Algorithms Illuminated Part 1, section 1.3
@@ -113,4 +97,4 @@ def karatsuba_algorithm (number1, number2):
 if __name__ == "__main__":
     number1 = int(input("Enter the first number for the multiplication: "))
     number2 = int(input("Enter the second number for the multiplication: "))
-    print (karatsuba_algorithm (number1, number2))
+    print (karatsuba (number1, number2))
