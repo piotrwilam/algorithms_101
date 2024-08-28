@@ -3,13 +3,22 @@ import list
 # PART 1
 
 def downstream_simple (number_1, number_2):
+    
     split_index = int(len(list.int_to_digit_list(number_1))/2)
+    
     list_1 = list.int_to_digit_list (number_1)
     list_2 = list.int_to_digit_list (number_2)
-    list_1_front, list_1_back = list_1[:-split_index], list_1[-split_index:]
-    list_2_front, list_2_back = list_2[:-split_index], list_2[-split_index:]
-    number_1_front, number_1_back = list.digit_list_to_int(list_1_front), list.digit_list_to_int(list_1_back)
-    number_2_front, number_2_back = list.digit_list_to_int(list_2_front), list.digit_list_to_int(list_2_back)
+    
+    list_1_front = list_1[:-split_index]
+    list_1_back = list_1[-split_index:]
+    list_2_front = list_2[:-split_index]
+    list_2_back = list_2[-split_index:]
+
+    number_1_front = list.digit_list_to_int(list_1_front)
+    number_1_back = list.digit_list_to_int(list_1_back)
+    number_2_front = list.digit_list_to_int(list_2_front)
+    number_2_back = list.digit_list_to_int(list_2_back)
+    
     return [number_1_front, number_2_front, number_1_back, number_2_back, number_1_front+number_1_back, number_2_front+number_2_back]
 
 def downstream_list (list_in):
@@ -61,7 +70,6 @@ def input_numbers(number1, number2):
     input_list = [number1,number2]
     return input_list
 
-
 def karatsuba (number1, number2):
     """KARATSUBA Algorithm (KA)
     KA makes multiplication of integers. Numbers to be multiplied have equal number of digits and the number of digits is a power of 2
@@ -89,10 +97,10 @@ def karatsuba (number1, number2):
     2) upstream_list - upstream_simple applied to triples of numbers on the list
     3) upstream_recursive - the recursive application of the above two
     """
-    step1 = downstream_recursive (input_numbers(number1, number2))
-    step2 = upstream_base (step1)
-    step3 = upstream_recursive (step2)
-    return step3
+    step_downstream = downstream_recursive (input_numbers(number1, number2))
+    step_upstream_base = upstream_base (step_downstream)
+    step_upstream_recursive = upstream_recursive (step_upstream_base)
+    return step_upstream_recursive
 
 if __name__ == "__main__":
     number1 = int(input("Enter the first number for the multiplication: "))
